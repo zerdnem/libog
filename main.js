@@ -41,9 +41,7 @@ fetch()
 			)
 		    })
 		},
-		validate: (val) => {
-		    return val ? true : 'Type something!';
-		},
+		validate: val => val ? true : 'Type something!'
 	    }
 	]).then(answer => {
 	    videos.map(video => {
