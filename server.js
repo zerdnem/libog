@@ -10,7 +10,7 @@ app.use(morgan('combined'))
 
 app.get('/api', (req, res) => {
 	var api = []
-	wp.posts().perPage(20).then(function( data ) {
+	wp.posts().perPage(100).then(function( data ) {
 		data.map(d => {
 			var title = d.slug
 			var content = d.content.rendered
