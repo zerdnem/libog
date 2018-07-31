@@ -8,6 +8,7 @@
     "inquirer": "^6.0.0",
     "inquirer-autocomplete-prompt": "^1.0.1",
     "morgan": "^1.9.0",
+    "ora": "^3.0.0",
     "request": "^2.87.0",
     "wpapi": "^1.1.2"
   },

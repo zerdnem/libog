@@ -1,6 +1,12 @@
 const request = require('request')
 const inquirer = require('inquirer')
 const fuzzy = require('fuzzy');
+const Ora = require('ora');
+
+const spinner = new Ora({
+	text: 'Downloading video',
+	spinner: process.argv[2]
+});
 
 const { spawn, exec } = require( 'child_process' )
 
@@ -47,14 +53,22 @@ fetch()
 	    videos.map(video => {
 		if (answer.title == video.title) {
 		    const dl = spawn( 'youtube-dl', [video.link] );
+		    var text = ''
 		    dl.stdout.on( 'data', data => {
-			console.log( `stdout: ${data}` );
+			text = data.toString()
+			var perc = text.match(/[0-9].[0-9]\%|[0-9][0-9].[0-9]\%/)
+			if (perc) {
+			    spinner.text = `Downloading video ${perc}`
+			}
+			spinner.start();
 		    });
 		    dl.stderr.on( 'data', data => {
-			console.log( `stderr: ${data}` );
+			spinner.text = 'Download fail'
+			spinner.fail()
 		    });
 		    dl.on( 'close', code => {
-			console.log( `child process exited with code ${code}` );
+			spinner.text = 'Done'
+			spinner.succeed();
 		    })
 		}
 	    })
